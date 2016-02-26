@@ -11,7 +11,7 @@
   "scripts": {
     "build": "rollup -f umd -n VertebrateEventEmitter vertebrate-event-emitter.es6.js > vertebrate-event-emitter.umd.js",
     "prepublish": "npm run build",
-    "postpublish": "rimraf vertebrate-event-emitter.es6.js",
+    "postpublish": "rimraf vertebrate-event-emitter.umd.js",
     "test": "mocha",
     "lint": "eslint ."
   },
