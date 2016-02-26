@@ -1,6 +1,6 @@
 {
   "name": "vertebrate-event-emitter",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "An event emitter implementation robust against memory leaks.",
   "main": "vertebrate-event-emitter.umd.js",
   "jsnext:main": "vertebrate-event-emitter.es6.js",
