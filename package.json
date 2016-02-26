@@ -1,0 +1,39 @@
+{
+  "name": "vertebrate-event-emitter",
+  "version": "1.0.0",
+  "description": "An event emitter implementation robust against memory leaks.",
+  "main": "vertebrate-event-emitter.umd.js",
+  "jsnext:main": "vertebrate-event-emitter.es6.js",
+  "files": [
+    "vertebrate-event-emitter.umd.js",
+    "vertebrate-event-emitter.es6.js"
+  ],
+  "scripts": {
+    "build": "rollup -f umd -n VertebrateEventEmitter vertebrate-event-emitter.es6.js > vertebrate-event-emitter.umd.js",
+    "prepublish": "npm run build",
+    "postpublish": "rimraf vertebrate-event-emitter.es6.js",
+    "test": "mocha",
+    "lint": "eslint ."
+  },
+  "repository": "qubyte/vertebrate-event-emitter.git",
+  "keywords": [
+    "mvc",
+    "backbone",
+    "es6",
+    "event",
+    "emitter"
+  ],
+  "author": "Mark S. Everitt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/qubyte/vertebrate-event-emitter/issues"
+  },
+  "homepage": "https://github.com/qubyte/vertebrate-event-emitter",
+  "devDependencies": {
+    "eslint": "2.2.0",
+    "mocha": "2.4.5",
+    "rimraf": "2.5.2",
+    "rollup": "0.25.4",
+    "sinon": "1.17.3"
+  }
+}
