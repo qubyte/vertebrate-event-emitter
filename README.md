@@ -4,6 +4,78 @@ This repository contains an implementation of an event emitter. Working with
 emitters can be frustrating. These frustrations led me to make an ES2015 based
 implementation contained in this repository.
 
+Key features:
+
+ - Based on `WeakMap` so you don't have to unregister callbacks when you drop
+   references to an emitter.
+ - Unregister a callback using a reference (like `setTimeout`).
+ - Give a registered callback a call count to unregister itself.
+
+[See below](#problems-with-existing-emitters) for why these are important.
+
+This module comes with both UMD and ES2015 versions. If you're using
+[rollup](http://rollupjs.org/), it'll use the ES2015 version. Node will use
+the UMD version automatically.
+
+## API
+
+### Class `EventEmitter`
+
+The `EventEmitter` is used to construct new emitter objects. It takes
+no arguments.
+
+```javascript
+const emitter = new EventEmitter();
+```
+
+### `reference = emitter.on(name, callback, count = Infinity)`
+
+Add a listener function `callback` to the emitter for the given `name`. `name`
+must be a string. `count` is the number of times the event can be called before
+the listener is automatically unregistered. `count` defaults to `Infinity` when
+not given. When given it must be a positive integer greater than `1`, or
+`Infinity`.
+
+A `reference` object is returned, which may later be used to unregister the
+listener.
+
+```javascript
+// Callback called every time 'event-name' triggered.
+emitter.on('event-name', callback);
+
+// Callback each time 'event-name' triggered, unregistering after 10 calls.
+emitter.on('event-name', callback, 10);
+```
+
+The count parameter can be used to simulate a Node.js style `once` method.
+
+### `emitter.off(reference)`
+
+Unregister an event listener using the `reference` object returned by
+`emitter.on`.
+
+```javascript
+// The on method returns a reference object.
+const ref = emitter.on('event-name', callback);
+
+// Use the off method to unregister the callback.
+emitter.off(ref);
+```
+
+### `emitter.trigger(name, ...args)`
+
+Trigger all handlers for the given name with the remaining arguments `args`.
+
+```javascript
+function testCallback(a, b, c) {
+  console.log(a, b, c);
+}
+
+emitter.on('some-event', testCallback);
+
+emitter.trigger('some-event', 1, 2, 3) // logs: 1, 2, 3
+```
+
 ## Problems with existing emitters
 
 ### Emitters make memory leaks too easy to create
@@ -21,7 +93,7 @@ memory leaks.
 
 ### Most implementations are keyed on event name and a callback
 
-In Node.js, you might have code like:
+In Node, you might have code like:
 
 ```javascript
 const EventEmitter = require('events');
@@ -62,44 +134,3 @@ emitter.off(ref); // Remove the listener. No need to use the event name.
 
 You get a fresh reference object each time a listener is registered, so the
 ambiguity never arises.
-
-## API
-
-### Class `VertebrateEventEmitter`
-
-The `VertebrateEventEmitter` is used to construct new emitter objects. It takes
-no arguments.
-
-```javascript
-const emitter = new EventEmitter();
-```
-
-### `reference = emitter.on(name, callback, count = Infinity)`
-
-Add a listener function `callback` to the emitter for the given `name`. `name`
-must be a string. `count` is the number of times the event can be called before
-the listener is automatically unregistered. `count` defaults to `Infinity` when
-not given. When given it must be a positive integer greater than `1`, or
-`Infinity`.
-
-A `reference` object is returned, which may later be used to unregister the
-listener.
-
-### `emitter.off(reference)`
-
-Unregister an event listener using the `reference` object returned by
-`emitter.on`.
-
-### `emitter.trigger(name, ...args)`
-
-Trigger all handlers for the given name with the remaining arguments `args`.
-
-```javascript
-function testCallback(a, b, c) {
-  console.log(a, b, c);
-}
-
-emitter.on('some-event', testCallback);
-
-emitter.trigger('some-event', 1, 2, 3) // logs: 1, 2, 3
-```
