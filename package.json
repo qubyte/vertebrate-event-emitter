@@ -1,6 +1,6 @@
 {
   "name": "vertebrate-event-emitter",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "An event emitter implementation robust against memory leaks.",
   "main": "build/index.umd.js",
   "jsnext:main": "build/index.es6.js",
