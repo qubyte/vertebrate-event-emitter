@@ -1,5 +1,7 @@
 # Vertebrate event emitter
 
+[![Build Status](https://travis-ci.org/qubyte/vertebrate-event-emitter.svg?branch=master)](https://travis-ci.org/qubyte/vertebrate-event-emitter)
+
 This repository contains an implementation of an event emitter. Working with
 emitters can be frustrating. These frustrations led me to make an ES2015 based
 implementation contained in this repository.
