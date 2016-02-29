@@ -17,7 +17,7 @@ function getEventName(EventReference) {
 
 // EventReference instances are used as keys to get information about event
 // callbacks. An event can also be cancelled with an EventReference instance.
-function EventReference(eventName, callback, count) {
+export function EventReference(eventName, callback, count) {
   allHandlersPrivateData.set(this, {eventName, callback, count});
 }
 
@@ -30,19 +30,23 @@ const allEventsForAllEmitters = new WeakMap();
 
 function checkArgs(eventName, callback, count) {
   if (typeof eventName !== 'string') {
-    throw new Error('Event name must be a string.');
+    throw new TypeError('Event name must be a string.');
   }
 
   if (typeof callback !== 'function') {
-    throw new Error('Callback must be a function.');
+    throw new TypeError('Callback must be a function.');
+  }
+
+  if (typeof count !== 'number') {
+    throw new TypeError('When given, count must be a number.');
   }
 
   if (count !== Infinity && (!Number.isInteger(count) || count < 1)) {
-    throw new Error('Count must not be set to a negative number or a non-integer.');
+    throw new RangeError('Count must not be set to an integer less than zero or a non-integer.');
   }
 }
 
-export default class EventEmitter {
+export class EventEmitter {
   constructor() {
     allEventsForAllEmitters.set(this, new Map());
   }
