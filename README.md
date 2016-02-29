@@ -47,9 +47,9 @@ reference object, a lot like `setTimeout` does. Unregistering the event is done
 using this reference object:
 
 ```javascript
-import VertebrateEventEmitter from 'vertebrate-event-emitter';
+import EventEmitter from 'vertebrate-event-emitter';
 
-const emitter = new VertebrateEventEmitter();
+const emitter = new EventEmitter();
 
 function testCallback() {
   console.log('Hello, world!');
@@ -71,7 +71,7 @@ The `VertebrateEventEmitter` is used to construct new emitter objects. It takes
 no arguments.
 
 ```javascript
-const emitter = new VertebrateEventEmitter();
+const emitter = new EventEmitter();
 ```
 
 ### `reference = emitter.on(name, callback, count = Infinity)`
