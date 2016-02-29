@@ -27,4 +27,4 @@ build/Release
 node_modules
 
 # Build artifacts
-vertebrate-event-emitter.umd.js
+build
