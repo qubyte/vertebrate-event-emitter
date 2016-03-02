@@ -5,7 +5,7 @@ const allHandlersPrivateData = new WeakMap();
 function useCallback(eventReference, args) {
   const privateData = allHandlersPrivateData.get(eventReference);
 
-  privateData.callback.apply(null, args);
+  privateData.callback.apply(this, args);
   privateData.count--;
 
   return privateData.count === 0;
@@ -83,7 +83,7 @@ export class EventEmitter {
     const args = Array.prototype.slice.call(arguments, 1);
 
     for (const eventReference of allEventsForThisEventName) {
-      const done = useCallback(eventReference, args);
+      const done = useCallback.call(this, eventReference, args);
 
       if (done) {
         allEventsForThisEventName.delete(eventReference);
