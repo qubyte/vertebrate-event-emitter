@@ -66,7 +66,8 @@ emitter.off(ref);
 
 ### `emitter.trigger(name, ...args)`
 
-Trigger all handlers for the given name with the remaining arguments `args`.
+Trigger all handlers for the given name with the remaining arguments `args`. The
+callbacks are called with the emitter as `this`.
 
 ```javascript
 function testCallback(a, b, c) {

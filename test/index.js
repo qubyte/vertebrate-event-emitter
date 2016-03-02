@@ -120,6 +120,10 @@ describe('EventEmitter', () => {
         assert.deepEqual(callback2.args, [[1, 2, 3]]);
       });
 
+      it('calls callbacks with the emitter as context', () => {
+        assert.equal(callback1.firstCall.thisValue, emitter);
+      });
+
       it('does not call callbacks for other events', () => {
         assert.equal(callback3.callCount, 0);
       });
