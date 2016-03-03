@@ -13,16 +13,12 @@ describe('EventEmitter', () => {
     assert(typeof EventEmitter, 'function');
   });
 
-  it('throws when called without new', () => {
-    assert.throws(() => EventEmitter(), Error);
-  });
-
-  it('does not throw when called with new', () => {
-    assert.doesNotThrow(() => new EventEmitter());
-  });
-
   it('creates instances of itself', () => {
     assert.ok(new EventEmitter() instanceof EventEmitter);
+  });
+
+  it('returns an EventEmitter instance when called without new', () => {
+    assert.ok(EventEmitter() instanceof EventEmitter);
   });
 
   describe('an instance', () => {
