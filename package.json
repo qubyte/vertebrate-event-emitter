@@ -9,8 +9,8 @@
     "build/index.es6.js"
   ],
   "scripts": {
-    "build-es6": "rollup index.es6.js > build/index.es6.js",
-    "build-umd": "rollup -f umd -n EventEmitter index.es6.js > build/index.umd.js",
+    "build-es6": "rollup index.js > build/index.es6.js",
+    "build-umd": "rollup -f umd -n EventEmitter index.js > build/index.umd.js",
     "build": "mkdirp build && npm run build-es6 && npm run build-umd",
     "clean": "rimraf build",
     "prepublish": "npm run build",

@@ -6,6 +6,12 @@ This repository contains an implementation of an event emitter. Working with
 emitters can be frustrating. These frustrations led me to make an ES2015 based
 implementation contained in this repository.
 
+This module uses these ES2015 features:
+
+ - [`Set`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Set) ([support](http://kangax.github.io/compat-table/es6/#test-Set))
+ - [`Map`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Map) ([support](http://kangax.github.io/compat-table/es6/#test-Map))
+ - [`WeakMap`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) ([support](http://kangax.github.io/compat-table/es6/#test-WeakMap))
+
 Key features:
 
  - Based on `WeakMap` so you don't have to unregister callbacks when you drop

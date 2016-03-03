@@ -1,11 +1,11 @@
 // EventReference instances are keys, and objects with information about a
 // callback are values.
-const allHandlersPrivateData = new WeakMap();
+var allHandlersPrivateData = new WeakMap();
 
-function useCallback(eventReference, args) {
-  const privateData = allHandlersPrivateData.get(eventReference);
+function useCallback(emitter, eventReference, args) {
+  var privateData = allHandlersPrivateData.get(eventReference);
 
-  privateData.callback.apply(this, args);
+  privateData.callback.apply(emitter, args);
   privateData.count--;
 
   return privateData.count === 0;
@@ -26,7 +26,7 @@ export function EventReference(eventName, callback, count) {
 // values. The Set instance associated with an event name contains all the
 // EventHandler instances associated with the event with that name for that
 // emitter.
-const allEventsForAllEmitters = new WeakMap();
+var allEventsForAllEmitters = new WeakMap();
 
 function checkArgs(eventName, callback, count) {
   if (typeof eventName !== 'string') {
@@ -41,53 +41,56 @@ function checkArgs(eventName, callback, count) {
     throw new TypeError('When given, count must be a number.');
   }
 
-  if (count !== Infinity && (!Number.isInteger(count) || count < 1)) {
+  if (count !== Infinity && (Math.floor(count) !== count || count < 1)) {
     throw new RangeError('Count must not be set to an integer less than zero or a non-integer.');
   }
 }
 
-export class EventEmitter {
-  constructor() {
-    allEventsForAllEmitters.set(this, new Map());
+export function EventEmitter() {
+  if (!(this instanceof EventEmitter)) {
+    return new EventEmitter();
   }
 
-  on(eventName, callback, uncheckedCount) {
-    const count = uncheckedCount === undefined ? Infinity : uncheckedCount;
-
-    checkArgs(eventName, callback, count);
-
-    const allEventsForThisEmitter = allEventsForAllEmitters.get(this);
-    const allEventsForThisEventName = allEventsForThisEmitter.get(eventName);
-    const eventReference = new EventReference(eventName, callback, count);
-
-    if (allEventsForThisEventName) {
-      allEventsForThisEventName.add(eventReference);
-    } else {
-      allEventsForThisEmitter.set(eventName, new Set([eventReference]));
-    }
-
-    return eventReference;
-  }
-
-  off(handler) {
-    const eventName = getEventName(handler);
-    const allEventsForThisEmitter = allEventsForAllEmitters.get(this);
-    const allEventsForThisEventName = allEventsForThisEmitter.get(eventName);
-
-    allEventsForThisEventName.delete(handler);
-  }
-
-  trigger(eventName) {
-    const allEventsForThisEmitter = allEventsForAllEmitters.get(this);
-    const allEventsForThisEventName = allEventsForThisEmitter.get(eventName) || [];
-    const args = Array.prototype.slice.call(arguments, 1);
-
-    for (const eventReference of allEventsForThisEventName) {
-      const done = useCallback.call(this, eventReference, args);
-
-      if (done) {
-        allEventsForThisEventName.delete(eventReference);
-      }
-    }
-  }
+  allEventsForAllEmitters.set(this, new Map());
 }
+
+EventEmitter.prototype.on = function (eventName, callback, uncheckedCount) {
+  var count = uncheckedCount === undefined ? Infinity : uncheckedCount;
+
+  checkArgs(eventName, callback, count);
+
+  var allEventsForThisEmitter = allEventsForAllEmitters.get(this);
+  var allEventsForThisEventName = allEventsForThisEmitter.get(eventName);
+  var eventReference = new EventReference(eventName, callback, count);
+
+  if (allEventsForThisEventName) {
+    allEventsForThisEventName.add(eventReference);
+  } else {
+    allEventsForThisEmitter.set(eventName, new Set([eventReference]));
+  }
+
+  return eventReference;
+};
+
+EventEmitter.prototype.off = function (handler) {
+  var eventName = getEventName(handler);
+  var allEventsForThisEmitter = allEventsForAllEmitters.get(this);
+  var allEventsForThisEventName = allEventsForThisEmitter.get(eventName);
+
+  allEventsForThisEventName.delete(handler);
+};
+
+EventEmitter.prototype.trigger = function (eventName) {
+  var allEventsForThisEmitter = allEventsForAllEmitters.get(this);
+  var allEventsForThisEventName = allEventsForThisEmitter.get(eventName) || [];
+  var args = Array.prototype.slice.call(arguments, 1);
+  var emitter = this;
+
+  allEventsForThisEventName.forEach(function (eventReference) {
+    var done = useCallback(emitter, eventReference, args);
+
+    if (done) {
+      allEventsForThisEventName.delete(eventReference);
+    }
+  });
+};

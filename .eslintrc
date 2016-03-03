@@ -1,6 +1,8 @@
 {
-  "env": {
-    "es6": true
+  "globals": {
+    "WeakMap": true,
+    "Map": true,
+    "Set": true
   },
   "parserOptions": {
     "sourceType": "module"
