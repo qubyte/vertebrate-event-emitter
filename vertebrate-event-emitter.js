@@ -18,7 +18,7 @@ function getEventName(EventReference) {
 // EventReference instances are used as keys to get information about event
 // callbacks. An event can also be cancelled with an EventReference instance.
 export function EventReference(eventName, callback, count) {
-  allHandlersPrivateData.set(this, {eventName, callback, count});
+  allHandlersPrivateData.set(this, {eventName: eventName, callback: callback, count: count});
 }
 
 // This WeapMap instance has EventEmitter instances as keys, and Map instances
