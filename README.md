@@ -21,9 +21,11 @@ Key features:
 
 [See below](#problems-with-existing-emitters) for why these are important.
 
-This module comes with both UMD and ES2015 versions. If you're using
+This library comes with both UMD and ES2015 versions. If you're using
 [rollup](http://rollupjs.org/), it'll use the ES2015 version. Node will use
-the UMD version automatically.
+the UMD version automatically. Since this library provides UMD and ES2015
+versions, it's supported by every major module system (or no module system at
+all). It has no production dependencies, making it easy to include too!
 
 ## API
 
