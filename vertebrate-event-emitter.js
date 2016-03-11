@@ -77,7 +77,9 @@ EventEmitter.prototype.off = function (handler) {
   var allEventsForThisEmitter = allEventsForAllEmitters.get(this);
   var allEventsForThisEventName = allEventsForThisEmitter.get(eventName);
 
-  allEventsForThisEventName.delete(handler);
+  if (allEventsForThisEventName) {
+    allEventsForThisEventName.delete(handler);
+  }
 };
 
 EventEmitter.prototype.trigger = function (eventName) {
@@ -93,4 +95,16 @@ EventEmitter.prototype.trigger = function (eventName) {
       allEventsForThisEventName.delete(eventReference);
     }
   });
+};
+
+EventEmitter.prototype.emit = EventEmitter.prototype.trigger;
+
+EventEmitter.prototype.allOff = function (eventName) {
+  var allEventsForThisEmitter = allEventsForAllEmitters.get(this);
+
+  if (typeof eventName === 'string') {
+    allEventsForThisEmitter.delete(eventName);
+  } else {
+    allEventsForThisEmitter.clear();
+  }
 };

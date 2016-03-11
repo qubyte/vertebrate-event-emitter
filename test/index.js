@@ -40,6 +40,10 @@ describe('EventEmitter', () => {
       assert.equal(typeof emitter.trigger, 'function');
     });
 
+    it('has an "emit" method as an alias for the "trigger" method', () => {
+      assert.equal(emitter.emit, emitter.trigger);
+    });
+
     describe('the "on" method', () => {
       it('throws when given a non-string event name', () => {
         assert.throws(
@@ -174,6 +178,76 @@ describe('EventEmitter', () => {
         emitter.trigger('test-event', 'abc');
 
         assert.deepEqual(callback.args, [['abc']]);
+      });
+    });
+
+    describe('the "allOff" method', () => {
+      let callback1;
+      let callback2;
+      let callback3;
+
+      let handler1;
+
+      let anotherEmitter;
+
+      beforeEach(() => {
+        callback1 = sinon.stub();
+        callback2 = sinon.stub();
+        callback3 = sinon.stub();
+
+        handler1 = emitter.on('test-event', callback1);
+        emitter.on('another-event', callback2);
+
+        anotherEmitter = new EventEmitter();
+        anotherEmitter.on('test-event', callback3);
+      });
+
+      describe('when called without a name', () => {
+        beforeEach(() => {
+          emitter.allOff();
+        });
+
+        it('removes all listeners for the emitter', () => {
+          emitter.trigger('test-event');
+          emitter.trigger('another-event');
+
+          assert.equal(callback1.callCount, 0);
+          assert.equal(callback2.callCount, 0);
+        });
+
+        it('does not throw an error when removing an already removed handler', () => {
+          emitter.off(handler1);
+        });
+
+        it('does not affect other emitters', () => {
+          anotherEmitter.trigger('test-event');
+
+          assert.equal(callback3.callCount, 1);
+        });
+      });
+
+      describe('when called with a name', () => {
+        beforeEach(() => {
+          emitter.allOff('test-event');
+        });
+
+        it('removes listeners for the given name on the emitter', () => {
+          emitter.trigger('test-event');
+          emitter.trigger('another-event');
+
+          assert.equal(callback1.callCount, 0);
+          assert.equal(callback2.callCount, 1);
+        });
+
+        it('does not throw an error when removing an already removed handler', () => {
+          emitter.off(handler1);
+        });
+
+        it('does not affect other emitters', () => {
+          anotherEmitter.trigger('test-event');
+
+          assert.equal(callback3.callCount, 1);
+        });
       });
     });
   });

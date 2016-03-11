@@ -72,6 +72,12 @@ const ref = emitter.on('event-name', callback);
 emitter.off(ref);
 ```
 
+### `emitter.allOff(name = undefined)`
+
+When called with a name string, all events for that name are removed from the
+emitter. When called without a name string, all events for all names are
+removed.
+
 ### `emitter.trigger(name, ...args)`
 
 Trigger all handlers for the given name with the remaining arguments `args`. The
@@ -86,6 +92,10 @@ emitter.on('some-event', testCallback);
 
 emitter.trigger('some-event', 1, 2, 3) // logs: 1, 2, 3
 ```
+
+### `emitter.emit(name, ...args)`
+
+Alias for `emitter.trigger`.
 
 ## Problems with existing emitters
 
