@@ -18,7 +18,7 @@
     "test": "mkdirp build && rollup -f cjs vertebrate-event-emitter.js > build/test.js && mocha && npm run clean",
     "lint": "eslint ."
   },
-  "repository": "qubyte/vertebrate-event-emitter.git",
+  "repository": "qubyte/vertebrate-event-emitter",
   "keywords": [
     "mvc",
     "backbone",
