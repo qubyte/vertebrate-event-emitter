@@ -63,11 +63,12 @@ EventEmitter.prototype.on = function (eventName, callback, uncheckedCount) {
   var allEventsForThisEventName = allEventsForThisEmitter.get(eventName);
   var eventReference = new EventReference(eventName, callback, count);
 
-  if (allEventsForThisEventName) {
-    allEventsForThisEventName.add(eventReference);
-  } else {
-    allEventsForThisEmitter.set(eventName, new Set([eventReference]));
+  if (!allEventsForThisEventName) {
+    allEventsForThisEventName = new Set();
+    allEventsForThisEmitter.set(eventName, allEventsForThisEventName);
   }
+
+  allEventsForThisEventName.add(eventReference);
 
   return eventReference;
 };
