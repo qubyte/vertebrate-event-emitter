@@ -8,9 +8,7 @@ implementation contained in this repository.
 
 This module uses these ES2015 features:
 
- - [`Set`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Set) ([support](http://kangax.github.io/compat-table/es6/#test-Set))
- - [`Map`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Map) ([support](http://kangax.github.io/compat-table/es6/#test-Map))
- - [`WeakMap`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) ([support](http://kangax.github.io/compat-table/es6/#test-WeakMap))
+ - [`WeakMap`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) ([basic support needed only](http://kangax.github.io/compat-table/es6/#test-WeakMap))
 
 Key features:
 
