@@ -9,13 +9,16 @@
     "build/index.es6.js"
   ],
   "scripts": {
+    "clean": "rimraf build",
     "build-es6": "rollup index.js > build/index.es6.js",
     "build-umd": "rollup -f umd -n EventEmitter index.js > build/index.umd.js",
-    "build": "mkdirp build && npm run build-es6 && npm run build-umd",
-    "clean": "rimraf build",
+    "prebuild": "npm run clean && mkdirp build",
+    "build": "npm run build-es6 && npm run build-umd",
     "prepublish": "npm run build",
-    "postpublish": "rimraf build",
-    "test": "mkdirp build && rollup -f cjs vertebrate-event-emitter.js > build/test.js && mocha && npm run clean",
+    "postpublish": "npm run clean",
+    "pretest": "npm run clean && mkdirp build",
+    "test": "rollup -f cjs vertebrate-event-emitter.js > build/test.js && mocha",
+    "posttest": "npm run clean",
     "lint": "eslint ."
   },
   "repository": "qubyte/vertebrate-event-emitter",
@@ -33,12 +36,13 @@
   },
   "homepage": "https://github.com/qubyte/vertebrate-event-emitter",
   "devDependencies": {
-    "eslint": "2.2.0",
-    "memwatch-next": "0.2.10",
+    "eslint": "3.6.1",
+    "eslint-config-qubyte": "1.0.1",
+    "memwatch-next": "0.3.0",
     "mkdirp": "0.5.1",
-    "mocha": "2.4.5",
-    "rimraf": "2.5.2",
-    "rollup": "0.25.4",
-    "sinon": "1.17.3"
+    "mocha": "3.1.0",
+    "rimraf": "2.5.4",
+    "rollup": "0.36.0",
+    "sinon": "1.17.6"
   }
 }
