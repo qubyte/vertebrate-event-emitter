@@ -1,5 +1,9 @@
 # History
 
+## v3.1.1
+
+Updated tooling, but no real code changes.
+
 ## v3.1.0
 
 The addition of an `allOff` method to clear callbacks in batch. The addition of an `emit` method as
