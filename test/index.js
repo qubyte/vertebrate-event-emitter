@@ -18,7 +18,7 @@ describe('EventEmitter', () => {
   });
 
   it('returns an EventEmitter instance when called without new', () => {
-    assert.ok(EventEmitter() instanceof EventEmitter);
+    assert.ok(EventEmitter() instanceof EventEmitter); // eslint-disable-line new-cap
   });
 
   describe('an instance', () => {
@@ -151,7 +151,7 @@ describe('EventEmitter', () => {
 
         emitter.trigger('test-event', 'a', 'b', 'c');
 
-        assert.deepEqual(callback.args, [['a', 'b', 'c'], ['a', 'b', 'c']])
+        assert.deepEqual(callback.args, [['a', 'b', 'c'], ['a', 'b', 'c']]);
       });
 
       it('does not call callbacks which have been removed with a reference', () => {
@@ -287,7 +287,7 @@ describe('EventEmitter', () => {
           new EventEmitter().on('test', () => {});
         }
 
-        var reference = new EventEmitter().on('test', () => {}); // eslint-disable-line no-unused-vars
+        const reference = new EventEmitter().on('test', () => {}); // eslint-disable-line no-unused-vars
 
         results = hd.end();
       });
