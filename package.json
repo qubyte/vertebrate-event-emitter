@@ -3,6 +3,7 @@
   "version": "3.1.1",
   "description": "An event emitter implementation robust against memory leaks.",
   "main": "build/index.umd.js",
+  "module": "build/index.es6.js",
   "jsnext:main": "build/index.es6.js",
   "files": [
     "build/index.umd.js",
