@@ -1,5 +1,7 @@
 # Vertebrate event emitter
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/qubyte/vertebrate-event-emitter.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/qubyte/vertebrate-event-emitter.svg?branch=master)](https://travis-ci.org/qubyte/vertebrate-event-emitter)
 
 This repository contains an implementation of an event emitter. Working with
