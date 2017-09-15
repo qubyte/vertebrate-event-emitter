@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "clean": "rimraf build",
-    "build-es6": "rollup index.js > build/index.es6.js",
+    "build-es6": "rollup index.js -f es > build/index.es6.js",
     "build-umd": "rollup -f umd -n EventEmitter index.js > build/index.umd.js",
     "prebuild": "npm run clean && mkdirp build",
     "build": "npm run build-es6 && npm run build-umd",
