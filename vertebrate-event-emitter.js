@@ -51,7 +51,7 @@ export function EventEmitter() {
     return new EventEmitter();
   }
 
-  allEventsForAllEmitters.set(this, new Map());
+  allEventsForAllEmitters.set(this, Object.create(null));
 }
 
 EventEmitter.prototype.on = function (eventName, callback, uncheckedCount) {
@@ -60,15 +60,14 @@ EventEmitter.prototype.on = function (eventName, callback, uncheckedCount) {
   checkArgs(eventName, callback, count);
 
   var allEventsForThisEmitter = allEventsForAllEmitters.get(this);
-  var allEventsForThisEventName = allEventsForThisEmitter.get(eventName);
+  var allEventsForThisEventName = allEventsForThisEmitter[eventName];
   var eventReference = new EventReference(eventName, callback, count);
 
-  if (!allEventsForThisEventName) {
-    allEventsForThisEventName = new Set();
-    allEventsForThisEmitter.set(eventName, allEventsForThisEventName);
+  if (allEventsForThisEventName) {
+    allEventsForThisEventName.push(eventReference);
+  } else {
+    allEventsForThisEmitter[eventName] = [eventReference];
   }
-
-  allEventsForThisEventName.add(eventReference);
 
   return eventReference;
 };
@@ -76,26 +75,32 @@ EventEmitter.prototype.on = function (eventName, callback, uncheckedCount) {
 EventEmitter.prototype.off = function (handler) {
   var eventName = getEventName(handler);
   var allEventsForThisEmitter = allEventsForAllEmitters.get(this);
-  var allEventsForThisEventName = allEventsForThisEmitter.get(eventName);
+  var allEventsForThisEventName = allEventsForThisEmitter[eventName] || [];
+  var index = allEventsForThisEventName.indexOf(handler);
 
-  if (allEventsForThisEventName) {
-    allEventsForThisEventName.delete(handler);
+  if (index !== -1) {
+    allEventsForThisEventName.splice(index, 1);
   }
 };
 
 EventEmitter.prototype.trigger = function (eventName) {
   var allEventsForThisEmitter = allEventsForAllEmitters.get(this);
-  var allEventsForThisEventName = allEventsForThisEmitter.get(eventName) || [];
+  var allEventsForThisEventName = allEventsForThisEmitter[eventName] || [];
   var args = Array.prototype.slice.call(arguments, 1);
   var emitter = this;
 
-  allEventsForThisEventName.forEach(function (eventReference) {
-    var done = useCallback(emitter, eventReference, args);
+  var untriggered = allEventsForThisEventName.slice();
 
-    if (done) {
-      allEventsForThisEventName.delete(eventReference);
+  for (var i = 0, len = untriggered.length; i < len; i++) {
+    var eventReference = untriggered[i];
+    var index = allEventsForThisEventName.indexOf(eventReference);
+
+    if (index !== -1) {
+      if (useCallback(emitter, eventReference, args)) {
+        allEventsForThisEventName.splice(index, 1);
+      }
     }
-  });
+  }
 };
 
 EventEmitter.prototype.emit = EventEmitter.prototype.trigger;
@@ -103,9 +108,9 @@ EventEmitter.prototype.emit = EventEmitter.prototype.trigger;
 EventEmitter.prototype.allOff = function (eventName) {
   var allEventsForThisEmitter = allEventsForAllEmitters.get(this);
 
-  if (typeof eventName === 'string') {
-    allEventsForThisEmitter.delete(eventName);
-  } else {
-    allEventsForThisEmitter.clear();
+  if (typeof eventName !== 'string') {
+    allEventsForAllEmitters.set(this, Object.create(null));
+  } else if (allEventsForThisEmitter[eventName]) {
+    allEventsForThisEmitter[eventName] = [];
   }
 };
