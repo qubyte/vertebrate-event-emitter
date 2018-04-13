@@ -41,7 +41,7 @@
     "eslint-config-qubyte": "~2.0.0",
     "memwatch-next": "~0.3.0",
     "mkdirp": "~0.5.1",
-    "mocha": "~5.0.0",
+    "mocha": "~5.1.0",
     "rimraf": "~2.6.2",
     "rollup": "~0.57.0",
     "sinon": "~5.0.0"
