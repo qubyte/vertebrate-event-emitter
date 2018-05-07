@@ -2,7 +2,7 @@
 
 const assert = require('assert');
 const sinon = require('sinon');
-const memwatch = require('memwatch-next');
+const memwatch = require('node-memwatch');
 const everything = require('../build/test.js');
 
 const EventEmitter = everything.EventEmitter;
