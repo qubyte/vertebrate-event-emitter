@@ -44,6 +44,6 @@
     "node-memwatch": "^1.0.1",
     "rimraf": "~2.6.2",
     "rollup": "~0.60.0",
-    "sinon": "~5.0.0"
+    "sinon": "~5.1.0"
   }
 }
