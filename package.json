@@ -40,10 +40,10 @@
     "eslint": "^6.0.0",
     "eslint-config-qubyte": "~2.0.0",
     "mkdirp": "~0.5.1",
-    "mocha": "~6.1.0",
+    "mocha": "^6.1.4",
     "node-memwatch": "^1.0.1",
     "rimraf": "^2.6.3",
-    "rollup": "^1.1.2",
-    "sinon": "^7.2.3"
+    "rollup": "^1.16.2",
+    "sinon": "^7.3.2"
   }
 }
