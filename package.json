@@ -43,7 +43,7 @@
     "mocha": "^6.2.0",
     "node-memwatch": "^1.0.1",
     "rimraf": "^2.6.3",
-    "rollup": "^1.18.0",
+    "rollup": "^1.19.2",
     "sinon": "^7.3.2"
   }
 }
