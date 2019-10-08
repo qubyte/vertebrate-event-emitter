@@ -37,13 +37,13 @@
   },
   "homepage": "https://github.com/qubyte/vertebrate-event-emitter",
   "devDependencies": {
-    "eslint": "^6.1.0",
+    "eslint": "^6.5.1",
     "eslint-config-qubyte": "~3.0.0",
     "mkdirp": "~0.5.1",
-    "mocha": "^6.2.0",
+    "mocha": "^6.2.1",
     "node-memwatch": "^1.0.1",
     "rimraf": "^3.0.0",
-    "rollup": "^1.19.3",
-    "sinon": "^7.3.2"
+    "rollup": "^1.23.1",
+    "sinon": "^7.5.0"
   }
 }
