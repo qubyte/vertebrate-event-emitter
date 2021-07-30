@@ -2,7 +2,5 @@
   "env": {
     "mocha": true,
     "node": true
-  },
-  "root": true,
-  "extends": "qubyte/ES2015"
+  }
 }
