@@ -2,24 +2,15 @@
   "name": "vertebrate-event-emitter",
   "version": "4.0.1",
   "description": "An event emitter implementation robust against memory leaks.",
-  "main": "build/index.umd.js",
-  "module": "build/index.es6.js",
-  "jsnext:main": "build/index.es6.js",
-  "files": [
-    "build/index.umd.js",
-    "build/index.es6.js"
-  ],
+  "main": "./index.js",
+  "module": "./index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "type": "module",
+  "files": [],
   "scripts": {
-    "clean": "rimraf build",
-    "build-es6": "rollup index.js -f es > build/index.es6.js",
-    "build-umd": "rollup -f umd -n EventEmitter index.js > build/index.umd.js",
-    "prebuild": "npm run clean && mkdirp build",
-    "build": "npm run build-es6 && npm run build-umd",
-    "prepublish": "npm run build",
-    "postpublish": "npm run clean",
-    "pretest": "npm run clean && mkdirp build",
-    "test": "rollup -f cjs vertebrate-event-emitter.js > build/test.js && mocha",
-    "posttest": "npm run clean",
+    "test": "mocha",
     "lint": "eslint ."
   },
   "repository": "qubyte/vertebrate-event-emitter",
@@ -37,13 +28,10 @@
   },
   "homepage": "https://github.com/qubyte/vertebrate-event-emitter",
   "devDependencies": {
-    "eslint": "^7.1.0",
-    "eslint-config-qubyte": "~3.0.0",
-    "mkdirp": "^1.0.4",
-    "mocha": "^7.2.0",
-    "node-memwatch": "^1.0.1",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.12.0",
-    "sinon": "^9.0.2"
+    "@airbnb/node-memwatch": "^2.0.0",
+    "eslint": "^7.31.0",
+    "eslint-config-qubyte": "^4.1.0",
+    "mocha": "^9.0.3",
+    "sinon": "^11.1.2"
   }
 }
