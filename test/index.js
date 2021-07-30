@@ -1,12 +1,7 @@
-'use strict';
-
-const assert = require('assert');
-const sinon = require('sinon');
-const memwatch = require('node-memwatch');
-const everything = require('../build/test.js');
-
-const EventEmitter = everything.EventEmitter;
-const EventReference = everything.EventReference;
+import { strict as assert } from 'assert';
+import sinon from 'sinon';
+import memwatch from '@airbnb/node-memwatch';
+import { EventEmitter, EventReference } from '../vertebrate-event-emitter.js';
 
 describe('EventEmitter', () => {
   it('is a function', () => {
@@ -15,10 +10,6 @@ describe('EventEmitter', () => {
 
   it('creates instances of itself', () => {
     assert.ok(new EventEmitter() instanceof EventEmitter);
-  });
-
-  it('returns an EventEmitter instance when called without new', () => {
-    assert.ok(EventEmitter() instanceof EventEmitter); // eslint-disable-line new-cap
   });
 
   describe('an instance', () => {
