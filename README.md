@@ -1,18 +1,8 @@
 # Vertebrate event emitter
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/qubyte/vertebrate-event-emitter.svg)](https://greenkeeper.io/)
-
-[![Build Status](https://travis-ci.org/qubyte/vertebrate-event-emitter.svg?branch=master)](https://travis-ci.org/qubyte/vertebrate-event-emitter)
-
 This repository contains an implementation of an event emitter. Working with
 emitters can be frustrating. These frustrations led me to make an ES2015 based
 implementation contained in this repository.
-
-This module uses these ES2015 features:
-
- - [`Set`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Set) ([support](http://kangax.github.io/compat-table/es6/#test-Set))
- - [`Map`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Map) ([support](http://kangax.github.io/compat-table/es6/#test-Map))
- - [`WeakMap`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) ([support](http://kangax.github.io/compat-table/es6/#test-WeakMap))
 
 Key features:
 
@@ -119,7 +109,8 @@ memory leaks.
 In Node, you might have code like:
 
 ```javascript
-const EventEmitter = require('events');
+import EventEmitter from 'events';
+
 const emitter = new EventEmitter();
 
 function testCallback() {

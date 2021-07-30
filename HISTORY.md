@@ -1,5 +1,12 @@
 # History
 
+## v4.0.0
+
+- This module is now shipped only as an ES module.
+- More ES2015 features than before are in use since support is excellent.
+- Instances must be created with the `new` keyword. Previously `EventEmitter`
+  could be called as a function as well.
+
 ## v3.1.1
 
 Updated tooling, but no real code changes.
